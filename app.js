@@ -13,7 +13,7 @@ const expressLayouts = require('express-ejs-layouts');
 const app = express();
 
 // Connect to MongoDB with increased timeout and more robust options
-const mongoUri = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/syriamarket';
+const mongoUri = process.env.MONGODB_URI || 'mongodb+srv://Ahmad:1OMPwMGBNCANB4Ka@syriamarket.bl74hol.mongodb.net/';
 mongoose.connect(mongoUri, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
