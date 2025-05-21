@@ -1,0 +1,208 @@
+<!-- Hero Section -->
+<section class="hero">
+  <div class="hero-content">
+    <h1>Buy & Sell Anything in Syria</h1>
+    <p>The best marketplace for buying and selling in Syria</p>
+    
+    <div class="hero-search">
+      <form action="/listings" method="GET">
+        <div class="hero-search-container">
+          <div class="hero-search-category">
+            <select name="category">
+              <option value="all">All Categories</option>
+              <option value="electronics">Electronics</option>
+              <option value="clothing">Clothing</option>
+              <option value="furniture">Furniture</option>
+              <option value="vehicles">Vehicles</option>
+              <option value="real-estate">Real Estate</option>
+              <option value="services">Services</option>
+              <option value="jobs">Jobs</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          <div class="hero-search-input">
+            <input type="text" name="keyword" placeholder="What are you looking for?">
+          </div>
+          <div class="hero-search-city">
+            <select name="city">
+              <option value="all">All Cities</option>
+              <% cities.forEach(city => { %>
+                <option value="<%= city._id %>"><%= city._id %></option>
+              <% }); %>
+            </select>
+          </div>
+          <button type="submit" class="hero-search-btn">
+            <i class="fas fa-search"></i> Search
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- Categories Section -->
+<section class="categories">
+  <div class="section-header">
+    <h2>Browse Categories</h2>
+    <p>Find what you're looking for by category</p>
+  </div>
+  
+  <div class="categories-grid">
+    <% categories.forEach(category => { %>
+      <a href="/listings?category=<%= category.name %>" class="category-card">
+        <div class="category-icon">
+          <i class="fas <%= category.icon %>"></i>
+        </div>
+        <h3><%= category.displayName %></h3>
+        <p><%= category.count %> Listings</p>
+      </a>
+    <% }); %>
+  </div>
+</section>
+
+<!-- Featured Listings Section -->
+<% if (featuredListings.length > 0) { %>
+<section class="featured-listings">
+  <div class="section-header">
+    <h2>Featured Listings</h2>
+    <p>Handpicked listings you might like</p>
+  </div>
+  
+  <div class="listings-grid">
+    <% featuredListings.forEach(listing => { %>
+      <div class="listing-card">
+        <div class="listing-card-img">
+          <a href="/listings/<%= listing._id %>">
+            <img src="/uploads/<%= listing.images[0] %>" alt="<%= listing.title %>">
+          </a>
+          <span class="listing-badge featured">Featured</span>
+        </div>
+        <div class="listing-card-content">
+          <div class="listing-card-info">
+            <span class="listing-category"><%= listing.category.charAt(0).toUpperCase() + listing.category.slice(1) %></span>
+            <span class="listing-location"><i class="fas fa-map-marker-alt"></i> <%= listing.location.city %></span>
+          </div>
+          <h3 class="listing-title">
+            <a href="/listings/<%= listing._id %>"><%= listing.title %></a>
+          </h3>
+          <div class="listing-price">
+            <span>$<%= listing.price.toLocaleString() %></span>
+          </div>
+          <div class="listing-meta">
+            <span class="listing-date">
+              <i class="far fa-clock"></i> 
+              <%= new Date(listing.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) %>
+            </span>
+            <span class="listing-views">
+              <i class="far fa-eye"></i> <%= listing.views %>
+            </span>
+          </div>
+        </div>
+      </div>
+    <% }); %>
+  </div>
+  
+  <div class="view-more">
+    <a href="/listings" class="btn btn-outline">View All Listings</a>
+  </div>
+</section>
+<% } %>
+
+<!-- Recent Listings Section -->
+<section class="recent-listings">
+  <div class="section-header">
+    <h2>Recent Listings</h2>
+    <p>Browse the latest listings on our marketplace</p>
+  </div>
+  
+  <div class="listings-grid">
+    <% recentListings.forEach(listing => { %>
+      <div class="listing-card">
+        <div class="listing-card-img">
+          <a href="/listings/<%= listing._id %>">
+            <img src="/uploads/<%= listing.images[0] %>" alt="<%= listing.title %>">
+          </a>
+          <% if (listing.isFeatured) { %>
+            <span class="listing-badge featured">Featured</span>
+          <% } %>
+        </div>
+        <div class="listing-card-content">
+          <div class="listing-card-info">
+            <span class="listing-category"><%= listing.category.charAt(0).toUpperCase() + listing.category.slice(1) %></span>
+            <span class="listing-location"><i class="fas fa-map-marker-alt"></i> <%= listing.location.city %></span>
+          </div>
+          <h3 class="listing-title">
+            <a href="/listings/<%= listing._id %>"><%= listing.title %></a>
+          </h3>
+          <div class="listing-price">
+            <span>$<%= listing.price.toLocaleString() %></span>
+          </div>
+          <div class="listing-meta">
+            <span class="listing-date">
+              <i class="far fa-clock"></i> 
+              <%= new Date(listing.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) %>
+            </span>
+            <span class="listing-views">
+              <i class="far fa-eye"></i> <%= listing.views %>
+            </span>
+          </div>
+        </div>
+      </div>
+    <% }); %>
+  </div>
+  
+  <div class="view-more">
+    <a href="/listings" class="btn btn-outline">View All Listings</a>
+  </div>
+</section>
+
+<!-- How It Works Section -->
+<section class="how-it-works">
+  <div class="section-header">
+    <h2>How SyriaMarket Works</h2>
+    <p>Follow these simple steps to get started</p>
+  </div>
+  
+  <div class="steps-container">
+    <div class="step">
+      <div class="step-icon">
+        <i class="fas fa-user-plus"></i>
+      </div>
+      <h3>Create an Account</h3>
+      <p>Register and set up your profile with your details</p>
+    </div>
+    
+    <div class="step">
+      <div class="step-icon">
+        <i class="fas fa-camera"></i>
+      </div>
+      <h3>Post Your Ad</h3>
+      <p>Upload photos and fill in the details of your item</p>
+    </div>
+    
+    <div class="step">
+      <div class="step-icon">
+        <i class="fas fa-comments"></i>
+      </div>
+      <h3>Get Offers</h3>
+      <p>Receive offers and connect with potential buyers</p>
+    </div>
+    
+    <div class="step">
+      <div class="step-icon">
+        <i class="fas fa-handshake"></i>
+      </div>
+      <h3>Make a Deal</h3>
+      <p>Agree on terms and complete the transaction</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta">
+  <div class="cta-content">
+    <h2>Ready to sell your items?</h2>
+    <p>Join thousands of sellers on SyriaMarket today</p>
+    <a href="/listings/create" class="btn btn-primary">Post Your Ad Now</a>
+  </div>
+</section>

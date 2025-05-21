@@ -1,0 +1,171 @@
+<section class="admin-dashboard">
+  <div class="dashboard-header">
+    <h1>Admin Dashboard</h1>
+    <p>Manage the marketplace and users</p>
+  </div>
+  
+  <div class="dashboard-container">
+    <!-- Admin Sidebar -->
+    <aside class="dashboard-sidebar">
+      <div class="user-profile-card">
+        <div class="user-avatar admin">
+          <i class="fas fa-user-shield"></i>
+        </div>
+        <div class="user-info">
+          <h3><%= user.username %></h3>
+          <p><span class="admin-badge">Administrator</span></p>
+        </div>
+      </div>
+      
+      <nav class="dashboard-nav">
+        <ul>
+          <li class="active">
+            <a href="/admin"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+          </li>
+          <li>
+            <a href="/admin/users"><i class="fas fa-users"></i> Manage Users</a>
+          </li>
+          <li>
+            <a href="/admin/listings"><i class="fas fa-tags"></i> Manage Listings</a>
+          </li>
+          <li>
+            <a href="/dashboard"><i class="fas fa-user"></i> My Dashboard</a>
+          </li>
+          <li>
+            <a href="/users/logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+          </li>
+        </ul>
+      </nav>
+    </aside>
+    
+    <!-- Admin Content -->
+    <div class="dashboard-content">
+      <!-- Dashboard Stats -->
+      <div class="dashboard-stats">
+        <div class="stat-card">
+          <div class="stat-icon">
+            <i class="fas fa-users"></i>
+          </div>
+          <div class="stat-info">
+            <h3><%= counts.users %></h3>
+            <p>Total Users</p>
+          </div>
+        </div>
+        
+        <div class="stat-card">
+          <div class="stat-icon">
+            <i class="fas fa-tags"></i>
+          </div>
+          <div class="stat-info">
+            <h3><%= counts.listings %></h3>
+            <p>Total Listings</p>
+          </div>
+        </div>
+        
+        <div class="stat-card">
+          <div class="stat-icon">
+            <i class="fas fa-check-circle"></i>
+          </div>
+          <div class="stat-info">
+            <h3><%= counts.activeListings %></h3>
+            <p>Active Listings</p>
+          </div>
+        </div>
+        
+        <div class="stat-card">
+          <div class="stat-icon">
+            <i class="fas fa-star"></i>
+          </div>
+          <div class="stat-info">
+            <h3><%= counts.featuredListings %></h3>
+            <p>Featured Listings</p>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Recent Users -->
+      <div class="dashboard-section">
+        <div class="section-header-with-action">
+          <h2>Recent Users</h2>
+          <a href="/admin/users" class="btn btn-primary">
+            <i class="fas fa-users"></i> View All Users
+          </a>
+        </div>
+        
+        <div class="table-container">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Name</th>
+                <th>Location</th>
+                <th>Date Joined</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% recentUsers.forEach(user => { %>
+                <tr>
+                  <td><%= user.username %></td>
+                  <td><%= user.email %></td>
+                  <td><%= user.fullName %></td>
+                  <td><%= user.city %></td>
+                  <td><%= new Date(user.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) %></td>
+                  <td>
+                    <span class="status-badge <%= user.isActive ? 'active' : 'inactive' %>">
+                      <%= user.isActive ? 'Active' : 'Inactive' %>
+                    </span>
+                  </td>
+                </tr>
+              <% }); %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      
+      <!-- Recent Listings -->
+      <div class="dashboard-section">
+        <div class="section-header-with-action">
+          <h2>Recent Listings</h2>
+          <a href="/admin/listings" class="btn btn-primary">
+            <i class="fas fa-tags"></i> View All Listings
+          </a>
+        </div>
+        
+        <div class="table-container">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Category</th>
+                <th>Price</th>
+                <th>Seller</th>
+                <th>Date Posted</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% recentListings.forEach(listing => { %>
+                <tr>
+                  <td>
+                    <a href="/listings/<%= listing._id %>"><%= listing.title %></a>
+                  </td>
+                  <td><%= listing.category.charAt(0).toUpperCase() + listing.category.slice(1) %></td>
+                  <td>$<%= listing.price.toLocaleString() %></td>
+                  <td><%= listing.seller.username %></td>
+                  <td><%= new Date(listing.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) %></td>
+                  <td>
+                    <span class="status-badge <%= listing.isActive ? 'active' : 'inactive' %>">
+                      <%= listing.isActive ? 'Active' : 'Inactive' %>
+                    </span>
+                  </td>
+                </tr>
+              <% }); %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,91 @@
+<header>
+  <div class="header-top">
+    <div class="container">
+      <div class="header-top-content">
+        <div class="language-selector">
+          <button class="language-btn">
+            <i class="fas fa-globe"></i> English
+          </button>
+          <div class="language-dropdown">
+            <a href="#" data-lang="en">English</a>
+            <a href="#" data-lang="ar">العربية</a>
+          </div>
+        </div>
+        <div class="right-links">
+          <% if (locals.user) { %>
+            <a href="/dashboard"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+            <% if (locals.user.role === 'admin') { %>
+              <a href="/admin"><i class="fas fa-user-shield"></i> Admin</a>
+            <% } %>
+            <a href="/users/profile"><i class="fas fa-user"></i> Profile</a>
+            <a href="/users/logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+          <% } else { %>
+            <a href="/users/login"><i class="fas fa-sign-in-alt"></i> Login</a>
+            <a href="/users/register"><i class="fas fa-user-plus"></i> Register</a>
+          <% } %>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="header-main">
+    <div class="container">
+      <div class="header-main-content">
+        <div class="logo">
+          <a href="/">
+            <h1>Syria<span>Market</span></h1>
+          </a>
+        </div>
+        
+        <div class="header-search">
+          <form action="/listings" method="GET">
+            <div class="search-container">
+              <div class="search-category">
+                <select name="category">
+                  <option value="all">All Categories</option>
+                  <option value="electronics">Electronics</option>
+                  <option value="clothing">Clothing</option>
+                  <option value="furniture">Furniture</option>
+                  <option value="vehicles">Vehicles</option>
+                  <option value="real-estate">Real Estate</option>
+                  <option value="services">Services</option>
+                  <option value="jobs">Jobs</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+              <div class="search-input">
+                <input type="text" name="keyword" placeholder="Search SyriaMarket...">
+              </div>
+              <button type="submit" class="search-btn">
+                <i class="fas fa-search"></i>
+              </button>
+            </div>
+          </form>
+        </div>
+        
+        <div class="post-ad-btn">
+          <a href="/listings/create" class="btn btn-primary">
+            <i class="fas fa-plus-circle"></i> Post Ad
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <nav class="main-nav">
+    <div class="container">
+      <div class="nav-content">
+        <ul class="nav-menu">
+          <li><a href="/" class="<%= locals.currentPath === '/' ? 'active' : '' %>"><i class="fas fa-home"></i> Home</a></li>
+          <li><a href="/listings" class="<%= locals.currentPath.startsWith('/listings') && locals.currentPath !== '/listings/create' ? 'active' : '' %>"><i class="fas fa-tags"></i> Browse Listings</a></li>
+          <li><a href="/about" class="<%= locals.currentPath === '/about' ? 'active' : '' %>"><i class="fas fa-info-circle"></i> About</a></li>
+          <li><a href="/contact" class="<%= locals.currentPath === '/contact' ? 'active' : '' %>"><i class="fas fa-envelope"></i> Contact</a></li>
+        </ul>
+        
+        <div class="mobile-menu-toggle">
+          <i class="fas fa-bars"></i>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>

@@ -1,0 +1,216 @@
+<section class="listing-detail">
+  <div class="listing-detail-container">
+    <!-- Listing Gallery and Details -->
+    <div class="listing-main">
+      <!-- Listing Gallery -->
+      <div class="listing-gallery">
+        <div class="gallery-main">
+          <img src="/uploads/<%= listing.images[0] %>" alt="<%= listing.title %>" id="gallery-main-img">
+          <% if (listing.isFeatured) { %>
+            <span class="listing-badge featured">Featured</span>
+          <% } %>
+        </div>
+        <% if (listing.images.length > 1) { %>
+          <div class="gallery-thumbnails">
+            <% listing.images.forEach((image, index) => { %>
+              <div class="gallery-thumbnail <%= index === 0 ? 'active' : '' %>" data-index="<%= index %>">
+                <img src="/uploads/<%= image %>" alt="Thumbnail <%= index + 1 %>">
+              </div>
+            <% }); %>
+          </div>
+        <% } %>
+      </div>
+      
+      <!-- Listing Details -->
+      <div class="listing-content">
+        <div class="listing-header">
+          <h1><%= listing.title %></h1>
+          <div class="listing-meta">
+            <span class="listing-category"><i class="fas fa-tag"></i> <%= listing.category.charAt(0).toUpperCase() + listing.category.slice(1) %></span>
+            <span class="listing-location"><i class="fas fa-map-marker-alt"></i> <%= listing.location.city %></span>
+            <span class="listing-date"><i class="far fa-clock"></i> Posted <%= new Date(listing.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) %></span>
+            <span class="listing-views"><i class="far fa-eye"></i> <%= listing.views %> views</span>
+          </div>
+          <div class="listing-price">
+            <span>$<%= listing.price.toLocaleString() %></span>
+          </div>
+        </div>
+        
+        <div class="listing-info-section">
+          <h3>Details</h3>
+          <div class="listing-details-grid">
+            <div class="detail-item">
+              <span class="detail-label">Condition</span>
+              <span class="detail-value">
+                <%= listing.condition === 'like-new' ? 'Like New' : listing.condition.charAt(0).toUpperCase() + listing.condition.slice(1) %>
+              </span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">Category</span>
+              <span class="detail-value">
+                <%= listing.category.charAt(0).toUpperCase() + listing.category.slice(1) %>
+              </span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">Location</span>
+              <span class="detail-value"><%= listing.location.city %></span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">Address</span>
+              <span class="detail-value"><%= listing.location.address %></span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="listing-info-section">
+          <h3>Description</h3>
+          <div class="listing-description">
+            <p><%= listing.description %></p>
+          </div>
+        </div>
+        
+        <% if (user && listing.seller._id.toString() === user._id.toString()) { %>
+          <div class="listing-actions">
+            <a href="/listings/edit/<%= listing._id %>" class="btn btn-primary">
+              <i class="fas fa-edit"></i> Edit Listing
+            </a>
+            <form action="/listings/<%= listing._id %>?_method=DELETE" method="POST" class="delete-form">
+              <button type="submit" class="btn btn-danger">
+                <i class="fas fa-trash-alt"></i> Delete Listing
+              </button>
+            </form>
+          </div>
+        <% } %>
+      </div>
+    </div>
+    
+    <!-- Seller Information and Contact -->
+    <div class="listing-sidebar">
+      <div class="seller-card">
+        <h3>Seller Information</h3>
+        <div class="seller-info">
+          <div class="seller-avatar">
+            <i class="fas fa-user-circle"></i>
+          </div>
+          <div class="seller-details">
+            <h4><%= listing.seller.username %></h4>
+            <p><i class="fas fa-map-marker-alt"></i> <%= listing.seller.city %></p>
+            <p><i class="fas fa-calendar-alt"></i> Member since <%= new Date(listing.seller.createdAt).toLocaleDateString('en-US', { month: 'short', year: 'numeric' }) %></p>
+          </div>
+        </div>
+        
+        <div class="seller-contact">
+          <button id="show-contact" class="btn btn-primary btn-block">
+            <i class="fas fa-phone"></i> Show Contact Info
+          </button>
+          <div id="contact-info" class="contact-info" style="display: none;">
+            <div class="contact-item">
+              <i class="fas fa-phone"></i>
+              <span><%= listing.contactPhone %></span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="seller-safety">
+          <h4>Safety Tips</h4>
+          <ul>
+            <li>Meet in a public place</li>
+            <li>Check the item before paying</li>
+            <li>Never pay in advance</li>
+          </ul>
+        </div>
+      </div>
+      
+      <% if (similarListings.length > 0) { %>
+        <div class="similar-listings-card">
+          <h3>Similar Listings</h3>
+          <div class="similar-listings">
+            <% similarListings.forEach(similarListing => { %>
+              <a href="/listings/<%= similarListing._id %>" class="similar-listing-item">
+                <div class="similar-listing-img">
+                  <img src="/uploads/<%= similarListing.images[0] %>" alt="<%= similarListing.title %>">
+                </div>
+                <div class="similar-listing-info">
+                  <h4><%= similarListing.title.length > 40 ? similarListing.title.substring(0, 40) + '...' : similarListing.title %></h4>
+                  <p class="similar-listing-price">$<%= similarListing.price.toLocaleString() %></p>
+                </div>
+              </a>
+            <% }); %>
+          </div>
+        </div>
+      <% } %>
+    </div>
+  </div>
+  
+  <!-- More from seller section -->
+  <% if (sellerListings.length > 0) { %>
+    <section class="more-listings-section">
+      <div class="section-header">
+        <h2>More from this Seller</h2>
+      </div>
+      
+      <div class="listings-grid">
+        <% sellerListings.forEach(sellerListing => { %>
+          <div class="listing-card">
+            <div class="listing-card-img">
+              <a href="/listings/<%= sellerListing._id %>">
+                <img src="/uploads/<%= sellerListing.images[0] %>" alt="<%= sellerListing.title %>">
+              </a>
+              <% if (sellerListing.isFeatured) { %>
+                <span class="listing-badge featured">Featured</span>
+              <% } %>
+            </div>
+            <div class="listing-card-content">
+              <div class="listing-card-info">
+                <span class="listing-category"><%= sellerListing.category.charAt(0).toUpperCase() + sellerListing.category.slice(1) %></span>
+                <span class="listing-location"><i class="fas fa-map-marker-alt"></i> <%= sellerListing.location.city %></span>
+              </div>
+              <h3 class="listing-title">
+                <a href="/listings/<%= sellerListing._id %>"><%= sellerListing.title %></a>
+              </h3>
+              <div class="listing-price">
+                <span>$<%= sellerListing.price.toLocaleString() %></span>
+              </div>
+              <div class="listing-meta">
+                <span class="listing-date">
+                  <i class="far fa-clock"></i> 
+                  <%= new Date(sellerListing.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) %>
+                </span>
+                <span class="listing-views">
+                  <i class="far fa-eye"></i> <%= sellerListing.views %>
+                </span>
+              </div>
+            </div>
+          </div>
+        <% }); %>
+      </div>
+    </section>
+  <% } %>
+</section>
+
+<script>
+  // Show contact info
+  document.getElementById('show-contact').addEventListener('click', function() {
+    const contactInfo = document.getElementById('contact-info');
+    contactInfo.style.display = 'block';
+    this.style.display = 'none';
+  });
+  
+  // Gallery image switching
+  const galleryThumbnails = document.querySelectorAll('.gallery-thumbnail');
+  const galleryMainImg = document.getElementById('gallery-main-img');
+  
+  galleryThumbnails.forEach(thumbnail => {
+    thumbnail.addEventListener('click', function() {
+      // Update main image
+      const imgSrc = this.querySelector('img').src;
+      galleryMainImg.src = imgSrc;
+      
+      // Update active thumbnail
+      galleryThumbnails.forEach(thumb => {
+        thumb.classList.remove('active');
+      });
+      this.classList.add('active');
+    });
+  });
+</script>

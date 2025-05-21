@@ -1,0 +1,30 @@
+{
+  "name": "syria-market",
+  "version": "1.0.0",
+  "description": "Online marketplace application for users in Syria",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js",
+    "seed": "node seeds/seed.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "connect-flash": "^0.1.1",
+    "connect-mongo": "^5.0.0",
+    "dotenv": "^16.5.0",
+    "ejs": "^3.1.9",
+    "express": "^4.18.2",
+    "express-ejs-layouts": "^2.5.1",
+    "express-session": "^1.17.3",
+    "method-override": "^3.0.0",
+    "moment": "^2.29.4",
+    "mongoose": "^7.5.0",
+    "multer": "^1.4.5-lts.1",
+    "passport": "^0.6.0",
+    "passport-local": "^1.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}

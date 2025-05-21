@@ -1,0 +1,325 @@
+<section class="contact-page">
+  <div class="page-header">
+    <h1>Contact Us</h1>
+    <p>We'd love to hear from you. Get in touch with us using the form below or through our contact information.</p>
+  </div>
+  
+  <div class="contact-container">
+    <div class="contact-form-container">
+      <div class="contact-card">
+        <h2>Send Us a Message</h2>
+        
+        <form class="contact-form">
+          <div class="form-group">
+            <label for="name">Your Name *</label>
+            <input type="text" id="name" name="name" class="form-control" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="email">Your Email *</label>
+            <input type="email" id="email" name="email" class="form-control" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="subject">Subject *</label>
+            <input type="text" id="subject" name="subject" class="form-control" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="message">Your Message *</label>
+            <textarea id="message" name="message" rows="6" class="form-control" required></textarea>
+          </div>
+          
+          <button type="submit" class="btn btn-primary btn-block">
+            <i class="fas fa-paper-plane"></i> Send Message
+          </button>
+        </form>
+      </div>
+    </div>
+    
+    <div class="contact-info-container">
+      <div class="contact-info-card">
+        <h2>Contact Information</h2>
+        
+        <div class="contact-info-list">
+          <div class="contact-info-item">
+            <div class="contact-info-icon">
+              <i class="fas fa-map-marker-alt"></i>
+            </div>
+            <div class="contact-info-content">
+              <h3>Our Location</h3>
+              <p>Damascus, Syria</p>
+            </div>
+          </div>
+          
+          <div class="contact-info-item">
+            <div class="contact-info-icon">
+              <i class="fas fa-phone"></i>
+            </div>
+            <div class="contact-info-content">
+              <h3>Phone Number</h3>
+              <p>+963 123 456 789</p>
+            </div>
+          </div>
+          
+          <div class="contact-info-item">
+            <div class="contact-info-icon">
+              <i class="fas fa-envelope"></i>
+            </div>
+            <div class="contact-info-content">
+              <h3>Email Address</h3>
+              <p><a href="mailto:info@syriamarket.com">info@syriamarket.com</a></p>
+            </div>
+          </div>
+          
+          <div class="contact-info-item">
+            <div class="contact-info-icon">
+              <i class="fas fa-clock"></i>
+            </div>
+            <div class="contact-info-content">
+              <h3>Working Hours</h3>
+              <p>Monday - Friday: 9 AM - 5 PM</p>
+              <p>Saturday: 10 AM - 2 PM</p>
+              <p>Sunday: Closed</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="social-links">
+          <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+          <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+          <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+      </div>
+      
+      <div class="faq-card">
+        <h2>Frequently Asked Questions</h2>
+        
+        <div class="faq-item">
+          <div class="faq-question">
+            <h3>How do I create an account?</h3>
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            <p>To create an account, click on the "Register" button in the top right corner of the page. Fill in your details and follow the instructions to complete registration.</p>
+          </div>
+        </div>
+        
+        <div class="faq-item">
+          <div class="faq-question">
+            <h3>How do I post a listing?</h3>
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            <p>After logging in, click on the "Post Ad" button in the header. Fill in the details about your item, upload photos, and submit the form.</p>
+          </div>
+        </div>
+        
+        <div class="faq-item">
+          <div class="faq-question">
+            <h3>Is it free to post listings?</h3>
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            <p>Yes, posting standard listings is completely free. We may offer premium options in the future for enhanced visibility.</p>
+          </div>
+        </div>
+        
+        <div class="faq-item">
+          <div class="faq-question">
+            <h3>How do I contact a seller?</h3>
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            <p>On any listing page, you'll find a "Show Contact Info" button that will reveal the seller's contact information.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .contact-page {
+    padding: var(--spacing-xl) 0;
+  }
+  
+  .page-header {
+    text-align: center;
+    margin-bottom: var(--spacing-xl);
+  }
+  
+  .contact-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-xl);
+  }
+  
+  .contact-card,
+  .contact-info-card,
+  .faq-card {
+    background-color: var(--bg-light);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-lg);
+    box-shadow: var(--shadow-sm);
+    margin-bottom: var(--spacing-xl);
+  }
+  
+  .contact-card h2,
+  .contact-info-card h2,
+  .faq-card h2 {
+    margin-bottom: var(--spacing-lg);
+    padding-bottom: var(--spacing-sm);
+    border-bottom: 1px solid var(--border-color);
+  }
+  
+  .contact-form .btn {
+    margin-top: var(--spacing-md);
+  }
+  
+  .contact-info-list {
+    margin-bottom: var(--spacing-lg);
+  }
+  
+  .contact-info-item {
+    display: flex;
+    margin-bottom: var(--spacing-md);
+  }
+  
+  .contact-info-icon {
+    min-width: 50px;
+    height: 50px;
+    background-color: rgba(25, 118, 210, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: var(--spacing-md);
+    font-size: 20px;
+    color: var(--primary);
+  }
+  
+  .contact-info-content h3 {
+    font-size: var(--font-md);
+    margin-bottom: var(--spacing-xs);
+  }
+  
+  .contact-info-content p {
+    color: var(--text-secondary);
+    margin-bottom: var(--spacing-xs);
+  }
+  
+  .contact-info-content p:last-child {
+    margin-bottom: 0;
+  }
+  
+  .social-links {
+    display: flex;
+    gap: var(--spacing-md);
+  }
+  
+  .social-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: var(--primary);
+    color: white;
+    transition: all var(--transition-fast);
+  }
+  
+  .social-link:hover {
+    background-color: var(--primary-dark);
+    transform: translateY(-3px);
+  }
+  
+  .faq-item {
+    margin-bottom: var(--spacing-md);
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: var(--spacing-md);
+  }
+  
+  .faq-item:last-child {
+    margin-bottom: 0;
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+  
+  .faq-question {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+  }
+  
+  .faq-question h3 {
+    font-size: var(--font-md);
+    margin-bottom: 0;
+  }
+  
+  .faq-answer {
+    margin-top: var(--spacing-sm);
+    padding-top: var(--spacing-sm);
+    display: none;
+  }
+  
+  .faq-answer p {
+    color: var(--text-secondary);
+    margin-bottom: 0;
+  }
+  
+  .faq-item.active .faq-answer {
+    display: block;
+  }
+  
+  .faq-item.active .faq-question i {
+    transform: rotate(180deg);
+  }
+  
+  @media (max-width: 992px) {
+    .contact-container {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // FAQ accordion
+    const faqItems = document.querySelectorAll('.faq-item');
+    
+    faqItems.forEach(item => {
+      const question = item.querySelector('.faq-question');
+      
+      question.addEventListener('click', () => {
+        // Close all other items
+        faqItems.forEach(otherItem => {
+          if (otherItem !== item) {
+            otherItem.classList.remove('active');
+          }
+        });
+        
+        // Toggle current item
+        item.classList.toggle('active');
+      });
+    });
+    
+    // Simple form validation
+    const contactForm = document.querySelector('.contact-form');
+    
+    if (contactForm) {
+      contactForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Here you would typically send the form data to the server
+        // For demo purposes, just show a success message
+        
+        alert('Thank you for your message! We will get back to you soon.');
+        contactForm.reset();
+      });
+    }
+  });
+</script>

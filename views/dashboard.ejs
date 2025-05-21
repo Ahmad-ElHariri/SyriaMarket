@@ -1,0 +1,149 @@
+<section class="dashboard">
+  <div class="dashboard-header">
+    <h1>My Dashboard</h1>
+    <p>Manage your listings and account</p>
+  </div>
+  
+  <div class="dashboard-container">
+    <!-- Dashboard Sidebar -->
+    <aside class="dashboard-sidebar">
+      <div class="user-profile-card">
+        <div class="user-avatar">
+          <i class="fas fa-user-circle"></i>
+        </div>
+        <div class="user-info">
+          <h3><%= user.username %></h3>
+          <p><i class="fas fa-map-marker-alt"></i> <%= user.city %></p>
+        </div>
+      </div>
+      
+      <nav class="dashboard-nav">
+        <ul>
+          <li class="active">
+            <a href="/dashboard"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+          </li>
+          <li>
+            <a href="/users/profile"><i class="fas fa-user"></i> My Profile</a>
+          </li>
+          <li>
+            <a href="/listings/create"><i class="fas fa-plus-circle"></i> Post New Ad</a>
+          </li>
+          <li>
+            <a href="/users/logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+          </li>
+        </ul>
+      </nav>
+    </aside>
+    
+    <!-- Dashboard Content -->
+    <div class="dashboard-content">
+      <!-- Dashboard Stats -->
+      <div class="dashboard-stats">
+        <div class="stat-card">
+          <div class="stat-icon">
+            <i class="fas fa-tags"></i>
+          </div>
+          <div class="stat-info">
+            <h3><%= listings.length %></h3>
+            <p>Active Listings</p>
+          </div>
+        </div>
+        
+        <div class="stat-card">
+          <div class="stat-icon">
+            <i class="fas fa-eye"></i>
+          </div>
+          <div class="stat-info">
+            <h3><%= listings.reduce((sum, listing) => sum + listing.views, 0) %></h3>
+            <p>Total Views</p>
+          </div>
+        </div>
+        
+        <div class="stat-card">
+          <div class="stat-icon">
+            <i class="fas fa-calendar-alt"></i>
+          </div>
+          <div class="stat-info">
+            <h3><%= Math.floor((new Date() - new Date(user.createdAt)) / (1000 * 60 * 60 * 24)) %></h3>
+            <p>Days as Member</p>
+          </div>
+        </div>
+      </div>
+      
+      <!-- My Listings -->
+      <div class="dashboard-section">
+        <div class="section-header-with-action">
+          <h2>My Listings</h2>
+          <a href="/listings/create" class="btn btn-primary">
+            <i class="fas fa-plus"></i> Post New Ad
+          </a>
+        </div>
+        
+        <% if (listings.length > 0) { %>
+          <div class="listings-table-container">
+            <table class="listings-table">
+              <thead>
+                <tr>
+                  <th>Listing</th>
+                  <th>Category</th>
+                  <th>Price</th>
+                  <th>Date</th>
+                  <th>Views</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% listings.forEach(listing => { %>
+                  <tr>
+                    <td>
+                      <div class="listing-table-item">
+                        <img src="/uploads/<%= listing.images[0] %>" alt="<%= listing.title %>">
+                        <div>
+                          <a href="/listings/<%= listing._id %>"><%= listing.title %></a>
+                        </div>
+                      </div>
+                    </td>
+                    <td><%= listing.category.charAt(0).toUpperCase() + listing.category.slice(1) %></td>
+                    <td>$<%= listing.price.toLocaleString() %></td>
+                    <td><%= new Date(listing.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) %></td>
+                    <td><%= listing.views %></td>
+                    <td>
+                      <span class="status-badge <%= listing.isActive ? 'active' : 'inactive' %>">
+                        <%= listing.isActive ? 'Active' : 'Inactive' %>
+                      </span>
+                    </td>
+                    <td>
+                      <div class="listing-actions">
+                        <a href="/listings/<%= listing._id %>" class="btn btn-sm btn-outline">
+                          <i class="fas fa-eye"></i>
+                        </a>
+                        <a href="/listings/edit/<%= listing._id %>" class="btn btn-sm btn-outline">
+                          <i class="fas fa-edit"></i>
+                        </a>
+                        <form action="/listings/<%= listing._id %>?_method=DELETE" method="POST" class="delete-form">
+                          <button type="submit" class="btn btn-sm btn-danger">
+                            <i class="fas fa-trash-alt"></i>
+                          </button>
+                        </form>
+                      </div>
+                    </td>
+                  </tr>
+                <% }); %>
+              </tbody>
+            </table>
+          </div>
+        <% } else { %>
+          <div class="no-listings-message">
+            <div class="no-listings-icon">
+              <i class="fas fa-tag"></i>
+            </div>
+            <h3>No listings yet</h3>
+            <p>You haven't posted any listings yet. Click the button below to create your first listing.</p>
+            <a href="/listings/create" class="btn btn-primary">Post Your First Ad</a>
+          </div>
+        <% } %>
+      </div>
+    </div>
+  </div>
+</section>

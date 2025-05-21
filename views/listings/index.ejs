@@ -1,0 +1,192 @@
+<section class="listings-section">
+  <div class="listings-header">
+    <h1>Browse Listings</h1>
+    <p>Find what you're looking for from our wide range of listings</p>
+  </div>
+  
+  <div class="listings-container">
+    <!-- Filters Sidebar -->
+    <aside class="filters-sidebar">
+      <div class="filters-card">
+        <h3>Filters</h3>
+        <form action="/listings" method="GET" id="filters-form">
+          <!-- Category Filter -->
+          <div class="filter-group">
+            <label for="category">Category</label>
+            <select name="category" id="category" class="form-control">
+              <option value="all">All Categories</option>
+              <option value="electronics" <%= query.category === 'electronics' ? 'selected' : '' %>>Electronics</option>
+              <option value="clothing" <%= query.category === 'clothing' ? 'selected' : '' %>>Clothing</option>
+              <option value="furniture" <%= query.category === 'furniture' ? 'selected' : '' %>>Furniture</option>
+              <option value="vehicles" <%= query.category === 'vehicles' ? 'selected' : '' %>>Vehicles</option>
+              <option value="real-estate" <%= query.category === 'real-estate' ? 'selected' : '' %>>Real Estate</option>
+              <option value="services" <%= query.category === 'services' ? 'selected' : '' %>>Services</option>
+              <option value="jobs" <%= query.category === 'jobs' ? 'selected' : '' %>>Jobs</option>
+              <option value="other" <%= query.category === 'other' ? 'selected' : '' %>>Other</option>
+            </select>
+          </div>
+          
+          <!-- City Filter -->
+          <div class="filter-group">
+            <label for="city">City</label>
+            <select name="city" id="city" class="form-control">
+              <option value="all">All Cities</option>
+              <% cities.forEach(city => { %>
+                <option value="<%= city %>" <%= query.city === city ? 'selected' : '' %>><%= city %></option>
+              <% }); %>
+            </select>
+          </div>
+          
+          <!-- Condition Filter -->
+          <div class="filter-group">
+            <label for="condition">Condition</label>
+            <select name="condition" id="condition" class="form-control">
+              <option value="all">All Conditions</option>
+              <option value="new" <%= query.condition === 'new' ? 'selected' : '' %>>New</option>
+              <option value="like-new" <%= query.condition === 'like-new' ? 'selected' : '' %>>Like New</option>
+              <option value="good" <%= query.condition === 'good' ? 'selected' : '' %>>Good</option>
+              <option value="fair" <%= query.condition === 'fair' ? 'selected' : '' %>>Fair</option>
+              <option value="poor" <%= query.condition === 'poor' ? 'selected' : '' %>>Poor</option>
+            </select>
+          </div>
+          
+          <!-- Price Range Filter -->
+          <div class="filter-group">
+            <label for="minPrice">Price Range</label>
+            <div class="price-range-inputs">
+              <input 
+                type="number" 
+                name="minPrice" 
+                id="minPrice" 
+                class="form-control" 
+                placeholder="Min"
+                value="<%= query.minPrice || '' %>"
+              >
+              <span class="price-range-separator">to</span>
+              <input 
+                type="number" 
+                name="maxPrice" 
+                id="maxPrice" 
+                class="form-control" 
+                placeholder="Max"
+                value="<%= query.maxPrice || '' %>"
+              >
+            </div>
+          </div>
+          
+          <!-- Keyword Filter -->
+          <div class="filter-group">
+            <label for="keyword">Keyword</label>
+            <input 
+              type="text" 
+              name="keyword" 
+              id="keyword" 
+              class="form-control" 
+              placeholder="Search..."
+              value="<%= query.keyword || '' %>"
+            >
+          </div>
+          
+          <!-- Apply Filters Button -->
+          <div class="filter-actions">
+            <button type="submit" class="btn btn-primary btn-block">Apply Filters</button>
+            <a href="/listings" class="btn btn-outline btn-block">Clear Filters</a>
+          </div>
+        </form>
+      </div>
+    </aside>
+    
+    <!-- Listings Content -->
+    <div class="listings-content">
+      <!-- Listings Grid -->
+      <% if (listings.length > 0) { %>
+        <div class="listings-results-header">
+          <p class="results-count">
+            Showing <span><%= listings.length %></span> of <span><%= totalListings %></span> listings
+          </p>
+          <div class="listings-sort">
+            <label for="sort">Sort by:</label>
+            <select name="sort" id="sort" class="form-control sort-select">
+              <option value="date-desc">Newest First</option>
+              <option value="date-asc">Oldest First</option>
+              <option value="price-asc">Price: Low to High</option>
+              <option value="price-desc">Price: High to Low</option>
+            </select>
+          </div>
+        </div>
+        
+        <div class="listings-grid">
+          <% listings.forEach(listing => { %>
+            <div class="listing-card">
+              <div class="listing-card-img">
+                <a href="/listings/<%= listing._id %>">
+                  <img src="/uploads/<%= listing.images[0] %>" alt="<%= listing.title %>">
+                </a>
+                <% if (listing.isFeatured) { %>
+                  <span class="listing-badge featured">Featured</span>
+                <% } %>
+              </div>
+              <div class="listing-card-content">
+                <div class="listing-card-info">
+                  <span class="listing-category"><%= listing.category.charAt(0).toUpperCase() + listing.category.slice(1) %></span>
+                  <span class="listing-location"><i class="fas fa-map-marker-alt"></i> <%= listing.location.city %></span>
+                </div>
+                <h3 class="listing-title">
+                  <a href="/listings/<%= listing._id %>"><%= listing.title %></a>
+                </h3>
+                <div class="listing-price">
+                  <span>$<%= listing.price.toLocaleString() %></span>
+                </div>
+                <div class="listing-meta">
+                  <span class="listing-date">
+                    <i class="far fa-clock"></i> 
+                    <%= new Date(listing.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) %>
+                  </span>
+                  <span class="listing-views">
+                    <i class="far fa-eye"></i> <%= listing.views %>
+                  </span>
+                </div>
+              </div>
+            </div>
+          <% }); %>
+        </div>
+        
+        <!-- Pagination -->
+        <% if (totalPages > 1) { %>
+          <div class="pagination">
+            <% if (currentPage > 1) { %>
+              <a href="/listings?page=<%= currentPage - 1 %><%= Object.entries(query).filter(([key]) => key !== 'page').map(([key, value]) => `&${key}=${value}`).join('') %>" class="pagination-item">
+                <i class="fas fa-chevron-left"></i> Previous
+              </a>
+            <% } %>
+            
+            <% for (let i = 1; i <= totalPages; i++) { %>
+              <% if (i === currentPage) { %>
+                <span class="pagination-item active"><%= i %></span>
+              <% } else if (i === 1 || i === totalPages || (i >= currentPage - 1 && i <= currentPage + 1)) { %>
+                <a href="/listings?page=<%= i %><%= Object.entries(query).filter(([key]) => key !== 'page').map(([key, value]) => `&${key}=${value}`).join('') %>" class="pagination-item"><%= i %></a>
+              <% } else if (i === currentPage - 2 || i === currentPage + 2) { %>
+                <span class="pagination-item dots">...</span>
+              <% } %>
+            <% } %>
+            
+            <% if (currentPage < totalPages) { %>
+              <a href="/listings?page=<%= currentPage + 1 %><%= Object.entries(query).filter(([key]) => key !== 'page').map(([key, value]) => `&${key}=${value}`).join('') %>" class="pagination-item">
+                Next <i class="fas fa-chevron-right"></i>
+              </a>
+            <% } %>
+          </div>
+        <% } %>
+      <% } else { %>
+        <div class="no-listings">
+          <div class="no-listings-icon">
+            <i class="fas fa-search"></i>
+          </div>
+          <h2>No listings found</h2>
+          <p>Try adjusting your search filters or check back later.</p>
+          <a href="/listings" class="btn btn-primary">Clear Filters</a>
+        </div>
+      <% } %>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,319 @@
+<section class="profile-page">
+  <div class="page-header">
+    <h1>My Profile</h1>
+  </div>
+  
+  <div class="profile-container">
+    <!-- Profile Sidebar -->
+    <aside class="profile-sidebar">
+      <div class="user-profile-card">
+        <div class="user-avatar">
+          <i class="fas fa-user-circle"></i>
+        </div>
+        <div class="user-info">
+          <h3><%= user.username %></h3>
+          <p><i class="fas fa-map-marker-alt"></i> <%= user.city %></p>
+          <p><i class="fas fa-calendar-alt"></i> Member since <%= new Date(user.createdAt).toLocaleDateString('en-US', { month: 'long', year: 'numeric' }) %></p>
+        </div>
+      </div>
+      
+      <div class="profile-actions">
+        <a href="/users/edit-profile" class="btn btn-outline btn-block">
+          <i class="fas fa-edit"></i> Edit Profile
+        </a>
+        <a href="/dashboard" class="btn btn-outline btn-block">
+          <i class="fas fa-tachometer-alt"></i> My Dashboard
+        </a>
+        <a href="/listings/create" class="btn btn-primary btn-block">
+          <i class="fas fa-plus-circle"></i> Post New Ad
+        </a>
+      </div>
+    </aside>
+    
+    <!-- Profile Content -->
+    <div class="profile-content">
+      <!-- User Information -->
+      <div class="profile-section">
+        <h2>Profile Information</h2>
+        <div class="profile-details">
+          <div class="profile-detail-item">
+            <span class="detail-label">Full Name</span>
+            <span class="detail-value"><%= user.fullName %></span>
+          </div>
+          <div class="profile-detail-item">
+            <span class="detail-label">Username</span>
+            <span class="detail-value"><%= user.username %></span>
+          </div>
+          <div class="profile-detail-item">
+            <span class="detail-label">Email</span>
+            <span class="detail-value"><%= user.email %></span>
+          </div>
+          <div class="profile-detail-item">
+            <span class="detail-label">Phone</span>
+            <span class="detail-value"><%= user.phone || 'Not provided' %></span>
+          </div>
+          <div class="profile-detail-item">
+            <span class="detail-label">Location</span>
+            <span class="detail-value"><%= user.city %></span>
+          </div>
+          <div class="profile-detail-item">
+            <span class="detail-label">Account Type</span>
+            <span class="detail-value"><%= user.role === 'admin' ? 'Administrator' : 'Standard User' %></span>
+          </div>
+        </div>
+      </div>
+      
+      <!-- My Listings -->
+      <div class="profile-section">
+        <div class="section-header-with-action">
+          <h2>My Listings</h2>
+          <a href="/listings/create" class="btn btn-primary">
+            <i class="fas fa-plus"></i> Post New Ad
+          </a>
+        </div>
+        
+        <% if (listings.length > 0) { %>
+          <div class="listings-grid">
+            <% listings.forEach(listing => { %>
+              <div class="listing-card">
+                <div class="listing-card-img">
+                  <a href="/listings/<%= listing._id %>">
+                    <img src="/uploads/<%= listing.images[0] %>" alt="<%= listing.title %>">
+                  </a>
+                  <% if (listing.isFeatured) { %>
+                    <span class="listing-badge featured">Featured</span>
+                  <% } %>
+                  <% if (!listing.isActive) { %>
+                    <span class="listing-badge inactive">Inactive</span>
+                  <% } %>
+                </div>
+                <div class="listing-card-content">
+                  <div class="listing-card-info">
+                    <span class="listing-category"><%= listing.category.charAt(0).toUpperCase() + listing.category.slice(1) %></span>
+                    <span class="listing-location"><i class="fas fa-map-marker-alt"></i> <%= listing.location.city %></span>
+                  </div>
+                  <h3 class="listing-title">
+                    <a href="/listings/<%= listing._id %>"><%= listing.title %></a>
+                  </h3>
+                  <div class="listing-price">
+                    <span>$<%= listing.price.toLocaleString() %></span>
+                  </div>
+                  <div class="listing-meta">
+                    <span class="listing-date">
+                      <i class="far fa-clock"></i> 
+                      <%= new Date(listing.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) %>
+                    </span>
+                    <span class="listing-views">
+                      <i class="far fa-eye"></i> <%= listing.views %>
+                    </span>
+                  </div>
+                  <div class="listing-actions">
+                    <a href="/listings/edit/<%= listing._id %>" class="btn btn-sm btn-outline">
+                      <i class="fas fa-edit"></i> Edit
+                    </a>
+                    <form action="/listings/<%= listing._id %>?_method=DELETE" method="POST" class="delete-form">
+                      <button type="submit" class="btn btn-sm btn-danger">
+                        <i class="fas fa-trash-alt"></i> Delete
+                      </button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            <% }); %>
+          </div>
+        <% } else { %>
+          <div class="no-listings-message">
+            <div class="no-listings-icon">
+              <i class="fas fa-tag"></i>
+            </div>
+            <h3>No listings yet</h3>
+            <p>You haven't posted any listings yet. Click the button below to create your first listing.</p>
+            <a href="/listings/create" class="btn btn-primary">Post Your First Ad</a>
+          </div>
+        <% } %>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .profile-page {
+    padding: var(--spacing-xl) 0;
+  }
+  
+  .page-header {
+    margin-bottom: var(--spacing-xl);
+  }
+  
+  .profile-container {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: var(--spacing-xl);
+  }
+  
+  .profile-sidebar {
+    position: sticky;
+    top: var(--spacing-xl);
+    height: fit-content;
+  }
+  
+  .user-profile-card {
+    background-color: var(--bg-light);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-bottom: var(--spacing-md);
+  }
+  
+  .user-avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-color: var(--primary-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: var(--spacing-md);
+    font-size: 40px;
+    color: var(--text-light);
+  }
+  
+  .user-info h3 {
+    margin-bottom: var(--spacing-xs);
+  }
+  
+  .user-info p {
+    color: var(--text-secondary);
+    margin-bottom: var(--spacing-xs);
+    font-size: var(--font-sm);
+  }
+  
+  .profile-actions {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+  }
+  
+  .profile-section {
+    background-color: var(--bg-light);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-lg);
+    box-shadow: var(--shadow-sm);
+    margin-bottom: var(--spacing-xl);
+  }
+  
+  .profile-section h2 {
+    margin-bottom: var(--spacing-lg);
+    padding-bottom: var(--spacing-sm);
+    border-bottom: 1px solid var(--border-color);
+  }
+  
+  .profile-details {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: var(--spacing-md);
+  }
+  
+  .profile-detail-item {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .detail-label {
+    font-size: var(--font-sm);
+    color: var(--text-secondary);
+    margin-bottom: var(--spacing-xs);
+  }
+  
+  .detail-value {
+    font-weight: 500;
+  }
+  
+  .section-header-with-action {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-lg);
+    padding-bottom: var(--spacing-sm);
+    border-bottom: 1px solid var(--border-color);
+  }
+  
+  .section-header-with-action h2 {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+  }
+  
+  .listing-card .listing-actions {
+    display: flex;
+    justify-content: flex-start;
+    gap: var(--spacing-sm);
+    margin-top: var(--spacing-sm);
+    padding-top: var(--spacing-sm);
+    border-top: 1px solid var(--border-color);
+  }
+  
+  .listing-badge.inactive {
+    background-color: var(--error);
+    color: var(--text-light);
+  }
+  
+  .no-listings-message {
+    text-align: center;
+    padding: var(--spacing-xl) 0;
+  }
+  
+  .no-listings-icon {
+    font-size: 50px;
+    color: var(--text-secondary);
+    margin-bottom: var(--spacing-md);
+  }
+  
+  @media (max-width: 992px) {
+    .profile-container {
+      grid-template-columns: 1fr;
+    }
+    
+    .profile-sidebar {
+      position: static;
+      margin-bottom: var(--spacing-lg);
+    }
+    
+    .user-profile-card {
+      flex-direction: row;
+      align-items: center;
+      text-align: left;
+    }
+    
+    .user-avatar {
+      margin-bottom: 0;
+      margin-right: var(--spacing-md);
+    }
+    
+    .profile-actions {
+      flex-direction: row;
+      flex-wrap: wrap;
+    }
+    
+    .profile-actions .btn {
+      flex: 1;
+      min-width: 200px;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .profile-details {
+      grid-template-columns: 1fr;
+    }
+    
+    .section-header-with-action {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--spacing-md);
+    }
+  }
+</style>

@@ -1,0 +1,353 @@
+<section class="auth-page">
+  <div class="auth-container">
+    <div class="auth-card">
+      <div class="auth-header">
+        <h1>Create an Account</h1>
+        <p>Join SyriaMarket to start buying and selling</p>
+      </div>
+      
+      <form action="/users/register" method="POST" class="auth-form">
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="fullName">Full Name *</label>
+            <input 
+              type="text" 
+              id="fullName" 
+              name="fullName" 
+              class="form-control" 
+              placeholder="Enter your full name"
+              value="<%= typeof fullName != 'undefined' ? fullName : '' %>"
+              required
+            >
+          </div>
+          
+          <div class="form-group col-md-6">
+            <label for="username">Username *</label>
+            <input 
+              type="text" 
+              id="username" 
+              name="username" 
+              class="form-control" 
+              placeholder="Choose a username"
+              value="<%= typeof username != 'undefined' ? username : '' %>"
+              required
+            >
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="email">Email *</label>
+          <input 
+            type="email" 
+            id="email" 
+            name="email" 
+            class="form-control" 
+            placeholder="Enter your email"
+            value="<%= typeof email != 'undefined' ? email : '' %>"
+            required
+          >
+        </div>
+        
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="password">Password *</label>
+            <div class="password-input-group">
+              <input 
+                type="password" 
+                id="password" 
+                name="password" 
+                class="form-control" 
+                placeholder="Enter your password"
+                required
+              >
+              <button type="button" class="password-toggle">
+                <i class="far fa-eye"></i>
+              </button>
+            </div>
+            <small class="form-text">Password must be at least 6 characters</small>
+          </div>
+          
+          <div class="form-group col-md-6">
+            <label for="confirmPassword">Confirm Password *</label>
+            <input 
+              type="password" 
+              id="confirmPassword" 
+              name="confirmPassword" 
+              class="form-control" 
+              placeholder="Confirm your password"
+              required
+            >
+          </div>
+        </div>
+        
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="phone">Phone Number</label>
+            <input 
+              type="text" 
+              id="phone" 
+              name="phone" 
+              class="form-control" 
+              placeholder="Enter your phone number"
+              value="<%= typeof phone != 'undefined' ? phone : '' %>"
+            >
+          </div>
+          
+          <div class="form-group col-md-6">
+            <label for="city">City *</label>
+            <select id="city" name="city" class="form-control" required>
+              <option value="" disabled selected>Select your city</option>
+              <option value="Damascus" <%= typeof city != 'undefined' && city === 'Damascus' ? 'selected' : '' %>>Damascus</option>
+              <option value="Aleppo" <%= typeof city != 'undefined' && city === 'Aleppo' ? 'selected' : '' %>>Aleppo</option>
+              <option value="Homs" <%= typeof city != 'undefined' && city === 'Homs' ? 'selected' : '' %>>Homs</option>
+              <option value="Latakia" <%= typeof city != 'undefined' && city === 'Latakia' ? 'selected' : '' %>>Latakia</option>
+              <option value="Hama" <%= typeof city != 'undefined' && city === 'Hama' ? 'selected' : '' %>>Hama</option>
+              <option value="Deir ez-Zor" <%= typeof city != 'undefined' && city === 'Deir ez-Zor' ? 'selected' : '' %>>Deir ez-Zor</option>
+              <option value="Idlib" <%= typeof city != 'undefined' && city === 'Idlib' ? 'selected' : '' %>>Idlib</option>
+              <option value="Tartus" <%= typeof city != 'undefined' && city === 'Tartus' ? 'selected' : '' %>>Tartus</option>
+              <option value="Raqqa" <%= typeof city != 'undefined' && city === 'Raqqa' ? 'selected' : '' %>>Raqqa</option>
+              <option value="Daraa" <%= typeof city != 'undefined' && city === 'Daraa' ? 'selected' : '' %>>Daraa</option>
+              <option value="Al-Hasakah" <%= typeof city != 'undefined' && city === 'Al-Hasakah' ? 'selected' : '' %>>Al-Hasakah</option>
+              <option value="Quneitra" <%= typeof city != 'undefined' && city === 'Quneitra' ? 'selected' : '' %>>Quneitra</option>
+              <option value="As-Suwayda" <%= typeof city != 'undefined' && city === 'As-Suwayda' ? 'selected' : '' %>>As-Suwayda</option>
+            </select>
+          </div>
+        </div>
+        
+        <div class="form-group form-check">
+          <input type="checkbox" class="form-check-input" id="terms" required>
+          <label class="form-check-label" for="terms">
+            I agree to the <a href="#">Terms and Conditions</a> and <a href="#">Privacy Policy</a>
+          </label>
+        </div>
+        
+        <button type="submit" class="btn btn-primary btn-block">
+          <i class="fas fa-user-plus"></i> Create Account
+        </button>
+      </form>
+      
+      <div class="auth-footer">
+        <p>Already have an account? <a href="/users/login">Login</a></p>
+      </div>
+    </div>
+    
+    <div class="auth-info">
+      <div class="auth-info-content">
+        <h2>Join Our Community</h2>
+        <p>Create an account to start buying and selling on Syria's leading marketplace.</p>
+        
+        <div class="auth-features">
+          <div class="auth-feature">
+            <div class="auth-feature-icon">
+              <i class="fas fa-tag"></i>
+            </div>
+            <div class="auth-feature-text">
+              <h3>Post Listings</h3>
+              <p>Sell your items quickly and easily</p>
+            </div>
+          </div>
+          
+          <div class="auth-feature">
+            <div class="auth-feature-icon">
+              <i class="fas fa-search"></i>
+            </div>
+            <div class="auth-feature-text">
+              <h3>Find Deals</h3>
+              <p>Browse thousands of listings</p>
+            </div>
+          </div>
+          
+          <div class="auth-feature">
+            <div class="auth-feature-icon">
+              <i class="fas fa-shield-alt"></i>
+            </div>
+            <div class="auth-feature-text">
+              <h3>Safe & Secure</h3>
+              <p>Your information is always protected</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .auth-page {
+    padding: var(--spacing-xl) 0;
+  }
+  
+  .auth-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    max-width: 1000px;
+    margin: 0 auto;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+  }
+  
+  .auth-card {
+    background-color: var(--bg-light);
+    padding: var(--spacing-xl);
+  }
+  
+  .auth-header {
+    text-align: center;
+    margin-bottom: var(--spacing-xl);
+  }
+  
+  .auth-header h1 {
+    margin-bottom: var(--spacing-sm);
+  }
+  
+  .auth-header p {
+    color: var(--text-secondary);
+  }
+  
+  .auth-form .form-group {
+    margin-bottom: var(--spacing-md);
+  }
+  
+  .password-input-group {
+    position: relative;
+  }
+  
+  .password-toggle {
+    position: absolute;
+    right: var(--spacing-md);
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+  }
+  
+  .auth-form .btn {
+    margin-top: var(--spacing-lg);
+  }
+  
+  .auth-footer {
+    text-align: center;
+    margin-top: var(--spacing-xl);
+    padding-top: var(--spacing-md);
+    border-top: 1px solid var(--border-color);
+  }
+  
+  .auth-footer p {
+    color: var(--text-secondary);
+    margin-bottom: 0;
+  }
+  
+  .auth-info {
+    background-color: var(--primary);
+    color: var(--text-light);
+    padding: var(--spacing-xl);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .auth-info-content {
+    max-width: 400px;
+  }
+  
+  .auth-info h2 {
+    margin-bottom: var(--spacing-md);
+  }
+  
+  .auth-info p {
+    margin-bottom: var(--spacing-lg);
+    opacity: 0.9;
+  }
+  
+  .auth-features {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+  }
+  
+  .auth-feature {
+    display: flex;
+    align-items: center;
+  }
+  
+  .auth-feature-icon {
+    width: 50px;
+    height: 50px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: var(--spacing-md);
+    font-size: 20px;
+  }
+  
+  .auth-feature-text h3 {
+    font-size: var(--font-md);
+    margin-bottom: var(--spacing-xs);
+  }
+  
+  .auth-feature-text p {
+    margin-bottom: 0;
+    font-size: var(--font-sm);
+    opacity: 0.8;
+  }
+  
+  @media (max-width: 768px) {
+    .auth-container {
+      grid-template-columns: 1fr;
+    }
+    
+    .auth-info {
+      display: none;
+    }
+    
+    .form-row {
+      display: block;
+    }
+    
+    .col-md-6 {
+      max-width: 100%;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Password toggle
+    const passwordToggles = document.querySelectorAll('.password-toggle');
+    
+    passwordToggles.forEach(toggle => {
+      toggle.addEventListener('click', function() {
+        const passwordField = this.previousElementSibling;
+        const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordField.setAttribute('type', type);
+        
+        // Toggle icon
+        const icon = this.querySelector('i');
+        icon.classList.toggle('fa-eye');
+        icon.classList.toggle('fa-eye-slash');
+      });
+    });
+    
+    // Password validation
+    const form = document.querySelector('form');
+    const password = document.querySelector('#password');
+    const confirmPassword = document.querySelector('#confirmPassword');
+    
+    form.addEventListener('submit', function(e) {
+      if (password.value !== confirmPassword.value) {
+        e.preventDefault();
+        alert('Passwords do not match!');
+      }
+      
+      if (password.value.length < 6) {
+        e.preventDefault();
+        alert('Password must be at least 6 characters!');
+      }
+    });
+  });
+</script>
